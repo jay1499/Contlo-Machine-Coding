@@ -74,9 +74,12 @@ vector<string> split(string& s, char d) {
 }
 
 int main() {
+    //asssuming input string in one line
     string s;
-    int n, q;
-    cin >> s >> n >> q;
+    getline(cin, s);
+
+    int q;
+    cin >> q;
     map<string, vector<string>> m;
     parse(s, m);
 
