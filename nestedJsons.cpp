@@ -76,10 +76,12 @@ vector<string> split(string& s, char d) {
 int main() {
     //asssuming input string in one line
     string s;
-    getline(cin, s);
 
+    getline(cin >> ws, s); 
     int q;
     cin >> q;
+    cin.ignore(); 
+
     map<string, vector<string>> m;
     parse(s, m);
 
