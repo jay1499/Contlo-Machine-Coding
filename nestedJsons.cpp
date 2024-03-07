@@ -8,9 +8,8 @@ void parse(string s, map<string, vector<string>>&m) {
         int i = 1;
         
         while(i<s.size()) {
-            string key = s.substr(i,s.find(':', i) - i);
-            
-            string val = s.substr(s.find(':', i) +1,  s.find(',', i);
+            string key = s.substr(i, s.find(':', i) - i);
+            string val = s.substr(s.find(':', i) +1,  s.find(',', i));
             
             if(val[0] == '{') {
                 map<string, vector<string>> inner;
@@ -24,7 +23,7 @@ void parse(string s, map<string, vector<string>>&m) {
                 else {
                     vector<string>temp;
                     temp.push_back(key);
-                    m[key] = value;
+                    m[key] = val;
                 }
             }
             i = s.find(',', i) + 1;
@@ -36,7 +35,7 @@ void printVal(map<string, vector<string>>m, string key) {
     int pos = key.find(".");
 
     //non-nested cases
-    if (pos == -1) {
+    if (pos == string::npos) {
         return m[key];
     }
     
@@ -66,8 +65,8 @@ int main() {
     parse(s, m);
     
     //sample string 
-    string json ="{\firstName\": \"Steve\", 
-    "\address\": {\"street\" : \"1st cross\"}}";
+    // string json ="{\firstName\": \"Steve\", 
+    // "\address\": {\"street\" : \"1st cross\"}}";
     
     for(int i= 0; i<q;i++) {
         string key;
