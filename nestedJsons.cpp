@@ -67,7 +67,7 @@ int main() {
     
     //sample string 
     string json ="{\firstName\": \"Steve\", 
-    "\address\": {\"street\" : \"1st cross\"}};
+    "\address\": {\"street\" : \"1st cross\"}}";
     
     for(int i= 0; i<q;i++) {
         string key;
