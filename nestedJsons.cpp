@@ -16,12 +16,16 @@ void parse(const string& s, map<string, vector<string>>& m) {
             i = s.size();
         }
 
+        //handle nested level objects
         if (val[0] == '{') {
             map<string, vector<string>> inner;
             parse(val, inner);
             // recursion for inner nested objects
             m[key] = inner;
-        } else {
+        } 
+
+        //handle single level object
+        else {
             vector<string> temp = split(val, ',');
             m[key] = temp;
         }
@@ -35,7 +39,7 @@ string printVal(const map<string, vector<string>>& m, const string& key) {
     if (pos == string::npos) {
         if (m.find(key) != m.end()) {
             string result;
-            for (const auto& value : m.at(key)) {
+            for (auto value : m.at(key)) {
                 result += value + " ";
             }
             return result;
@@ -47,7 +51,7 @@ string printVal(const map<string, vector<string>>& m, const string& key) {
     vector<string> innerJsons = split(key, '.');
     map<string, vector<string>> innerMap = m;
 
-    for (const auto& x : innerJsons) {
+    for (auto& x : innerJsons) {
         if (innerMap.count(x) == 0) {
             return "Null";
         }
@@ -55,20 +59,21 @@ string printVal(const map<string, vector<string>>& m, const string& key) {
     }
 
     string result;
-    for (const auto& value : innerMap[innerJsons.back()]) {
+    for (auto& x : innerMap[innerJsons.back()]) {
         result += value + " ";
     }
     return result;
 }
 
-vector<string> split(const string& s, char d) {
-    vector<string> tokens;
-    string token;
-    istringstream tokenStream(s);
-    while (getline(tokenStream, token, d)) {
-        tokens.push_back(token);
+//to handle splitting of nested objects with '.' as the delimiter
+vector<string> split(string& s, char d) {
+    vector<string> words;
+    string word;
+    istringstream wordStream(s);
+    while (getline(wordStream, word, d)) {
+        words.push_back(words);
     }
-    return tokens;
+    return words;
 }
 
 int main() {
