@@ -1,6 +1,10 @@
-#include <bits/stdc++.h>
+
+#include<bits/stdc++.h>
 using namespace std;
 
+void parse(const string& s, map<string, vector<string>>& m);
+string printVal(const map<string, vector<string>>& m, const string& key);
+vector<string> split(string& s, char d);
 
 void parse(const string& s, map<string, vector<string>>& m) {
     int i = 0;
@@ -15,15 +19,14 @@ void parse(const string& s, map<string, vector<string>>& m) {
             val = s.substr(s.find(':', i) + 1);
             i = s.size();
         }
-
-        //handle nested level objects
+        
+         //handle nested level objects
         if (val[0] == '{') {
             map<string, vector<string>> inner;
             parse(val, inner);
-            // recursion for inner nested objects
-            m[key] = inner;
+            m[key] = vector<string>{val};
         } 
-
+        
         //handle single level object
         else {
             vector<string> temp = split(val, ',');
@@ -33,36 +36,30 @@ void parse(const string& s, map<string, vector<string>>& m) {
 }
 
 string printVal(const map<string, vector<string>>& m, const string& key) {
-    int pos = key.find(".");
+    size_t pos = key.find(".");
 
-    // non-nested cases
     if (pos == string::npos) {
         if (m.find(key) != m.end()) {
             string result;
-            for (auto value : m.at(key)) {
+            for (const auto& value : m.at(key)) {
                 result += value + " ";
             }
             return result;
         } else {
             return "Null";
         }
-    }
-
-    vector<string> innerJsons = split(key, '.');
-    map<string, vector<string>> innerMap = m;
-
-    for (auto& x : innerJsons) {
-        if (innerMap.count(x) == 0) {
+    } else {
+        string innerKey = key.substr(0, pos);
+        string outerKey = key.substr(pos + 1);
+        if (m.find(innerKey) != m.end()) {
+            map<string, vector<string>> innerMap;
+            parse(m.at(innerKey).front(), innerMap);
+             // recursion for inner nested objects
+            return printVal(innerMap, outerKey);
+        } else {
             return "Null";
         }
-        innerMap = innerMap[x];
     }
-
-    string result;
-    for (auto& x : innerMap[innerJsons.back()]) {
-        result += value + " ";
-    }
-    return result;
 }
 
 //to handle splitting of nested objects with '.' as the delimiter
@@ -71,7 +68,7 @@ vector<string> split(string& s, char d) {
     string word;
     istringstream wordStream(s);
     while (getline(wordStream, word, d)) {
-        words.push_back(words);
+        words.push_back(word);
     }
     return words;
 }
@@ -91,3 +88,4 @@ int main() {
 
     return 0;
 }
+
