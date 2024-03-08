@@ -1,0 +1,23 @@
+Nodes  (stores info of individual nodes)
+------
+node_id
+node_type
+
+
+Event_Conditions (stores info of the event conditions)
+-------
+event_id
+condition_expression //ex-> age >= 25, event_type = 'checkout'
+next_node_id
+
+
+WorkflowNodeMapping (maps nodes to different workflows)
+-------------
+workflowmapping_id
+workflow_id 
+node_id
+
+Workflow (stores info of the different workflows)
+-------
+worflow_id
+workflow_name // ex->Order worflow, User workflow 
