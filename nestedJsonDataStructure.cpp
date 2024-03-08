@@ -17,8 +17,6 @@ class Json {
  // {firstname: john, lastname: doe, address : { city : bangalore}}
 
    void insert (vector<string> keys, string val) {
-      
-
       Trie *curr = root;
 
       for(auto key: keys) {
@@ -28,7 +26,7 @@ class Json {
             map<string, Trie>m;
             m[key] = *temp;
             temp->keys = m;
-            curr->keys[key]  = * temp;
+            curr->keys[key]  = *temp;
          } 
          else {
             curr = curr->keys[key];
